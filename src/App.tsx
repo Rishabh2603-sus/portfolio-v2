@@ -245,25 +245,10 @@ function Navbar({ onOpenTerminal }: { onOpenTerminal?: () => void }) {
           <button 
             onClick={() => { playSound('click'); toggleAmbient(); }}
             onMouseEnter={() => playSound('hover')}
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-mono transition-all ${
-              isAmbientPlaying 
-                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.15)]' 
-                : 'bg-white/5 border-white/10 text-neutral-400 hover:text-white hover:bg-white/10'
-            }`}
-            title={isAmbientPlaying ? "Turn off ambient music" : "Play ambient synth soundscape"}
+            className="hidden sm:flex items-center justify-center w-9 h-9 rounded-full bg-white/5 border border-white/10 text-neutral-400 hover:text-white hover:bg-white/10 transition-all"
+            title={isAmbientPlaying ? "Mute Soundscape" : "Play Soundscape"}
           >
-            {isAmbientPlaying ? (
-              <>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="hidden md:inline text-[11px] tracking-wider uppercase">Soundscape ON</span>
-                <Volume2 className="w-3.5 h-3.5 text-emerald-400" />
-              </>
-            ) : (
-              <>
-                <span className="hidden md:inline text-[11px] tracking-wider uppercase">Soundscape</span>
-                <VolumeX className="w-3.5 h-3.5 opacity-60" />
-              </>
-            )}
+            {isAmbientPlaying ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
           </button>
           
           {/* Terminal Trigger */}
