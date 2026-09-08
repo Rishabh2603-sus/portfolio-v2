@@ -73,7 +73,7 @@ export function useSoundDesign() {
         osc.type = 'sine';
         osc.frequency.setValueAtTime(1000, ctx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.03);
-        gain.gain.setValueAtTime(0.005, ctx.currentTime);
+        gain.gain.setValueAtTime(0.002, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.03);
         osc.start();
         osc.stop(ctx.currentTime + 0.03);
@@ -81,14 +81,14 @@ export function useSoundDesign() {
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(300, ctx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.08);
-        gain.gain.setValueAtTime(0.015, ctx.currentTime);
+        gain.gain.setValueAtTime(0.002, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.08);
         osc.start();
         osc.stop(ctx.currentTime + 0.08);
       } else if (type === 'type') {
         osc.type = 'square';
         osc.frequency.setValueAtTime(120, ctx.currentTime);
-        gain.gain.setValueAtTime(0.005, ctx.currentTime);
+        gain.gain.setValueAtTime(0.002, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.04);
         osc.start();
         osc.stop(ctx.currentTime + 0.04);
@@ -96,7 +96,7 @@ export function useSoundDesign() {
         osc.type = 'sawtooth';
         osc.frequency.setValueAtTime(50, ctx.currentTime);
         osc.frequency.linearRampToValueAtTime(300, ctx.currentTime + 0.4);
-        gain.gain.setValueAtTime(0.02, ctx.currentTime);
+        gain.gain.setValueAtTime(0.008, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.4);
         osc.start();
         osc.stop(ctx.currentTime + 0.4);
@@ -142,7 +142,7 @@ export function useSoundDesign() {
       osc2.frequency.setValueAtTime(110.5, ctx.currentTime); // Subtle binaural beat / harmonic shimmer
 
       gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-      gain.gain.linearRampToValueAtTime(0.012, ctx.currentTime + 2.5); // Slow elegant fade in
+      gain.gain.linearRampToValueAtTime(0.004, ctx.currentTime + 4.0); // Extremely subtle, slow elegant fade in
 
       osc1.connect(gain);
       osc2.connect(gain);
