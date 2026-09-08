@@ -27,38 +27,21 @@ const HackerRankIcon = () => (
 
 
 function Preloader({ onComplete }: { onComplete: () => void }) {
-  const [progress, setProgress] = useState(0);
-
   useEffect(() => {
-    const duration = 1800; // 1.8 seconds total
-    const interval = 20;
-    const steps = duration / interval;
-    let currentStep = 0;
-
-    const timer = setInterval(() => {
-      currentStep++;
-      const newProgress = Math.min(Math.round((currentStep / steps) * 100), 100);
-      setProgress(newProgress);
-
-      if (currentStep >= steps) {
-        clearInterval(timer);
-        setTimeout(() => {
-          onComplete();
-        }, 400); // short pause at 100% before firing complete
-      }
-    }, interval);
-
-    return () => clearInterval(timer);
+    // Elegant, slow reveal timing
+    const timer = setTimeout(() => {
+      onComplete();
+    }, 2400);
+    return () => clearTimeout(timer);
   }, [onComplete]);
 
   return (
     <motion.div
-      initial={{ y: 0 }}
       exit={{ y: "-100vh" }}
-      transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+      transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
       className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#050505] text-[#fafafa]"
     >
-      {/* Noise layer inside loader to maintain ambience */}
+      {/* Noise layer inside loader to perfectly match the site's ambience */}
       <div
         className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.04] mix-blend-overlay"
         style={{
@@ -67,35 +50,25 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
         }}
       />
       
-      <div className="flex flex-col items-center gap-6 relative z-10 overflow-hidden">
+      <div className="relative z-10 overflow-hidden flex items-center gap-6">
         <motion.div
-          initial={{ y: 40, opacity: 0 }}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+          className="w-2 h-2 rounded-full bg-white hidden sm:block"
+        />
+        <motion.span
+          initial={{ y: "100%", opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center"
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+          className="text-2xl md:text-3xl font-light tracking-[0.2em] text-neutral-200 uppercase"
         >
-          <span className="text-sm font-mono tracking-[0.3em] uppercase text-neutral-500 block mb-2">
-            System Initialization
-          </span>
-          <span className="text-4xl md:text-5xl font-medium tracking-tight">
-            {progress === 100 ? "Welcome." : `${progress}%`}
-          </span>
-        </motion.div>
-        
-        {/* Loading Bar */}
-        <div className="w-48 h-[1px] bg-white/[0.1] overflow-hidden relative">
-          <motion.div 
-            className="absolute top-0 left-0 bottom-0 bg-white"
-            initial={{ width: "0%" }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.1, ease: "linear" }}
-          />
-        </div>
+          Rishabh Sharma
+        </motion.span>
       </div>
     </motion.div>
   );
 }
-
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
