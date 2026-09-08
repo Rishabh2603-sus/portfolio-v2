@@ -64,3 +64,13 @@ body {
 .animate-scroll:hover {
   animation-play-state: paused;
 }
+
+/* Custom Cursor Hiding */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, .group {
+    cursor: none !important;
+  }
+}
