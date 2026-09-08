@@ -9,7 +9,7 @@ export function TerminalMode({ onClose }: { onClose: () => void }) {
   const [input, setInput] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const { playSound } = useSoundDesign();
+  const { playSound, isAmbientPlaying, toggleAmbient } = useSoundDesign();
 
   useEffect(() => {
     playSound('boot');
@@ -34,11 +34,14 @@ export function TerminalMode({ onClose }: { onClose: () => void }) {
       
       let output: React.ReactNode = '';
       if (cmd === 'help') {
-        output = 'Available commands: whoami, skills, clear, exit, sudo, repo';
+        output = 'Available commands: whoami, skills, music, repo, clear, exit, sudo';
       } else if (cmd === 'whoami') {
         output = 'Rishabh Sharma. Software & Systems Engineer.';
       } else if (cmd === 'skills') {
         output = 'React, Node.js, Systems Architecture, Applied AI.';
+      } else if (cmd === 'music') {
+        toggleAmbient();
+        output = isAmbientPlaying ? 'Soundscape ambient synth: STOPPED' : 'Soundscape ambient synth: PLAYING (warm 55Hz harmonic drone)';
       } else if (cmd === 'repo') {
         output = 'https://github.com/Rishabh2603-sus/portfolio-v2';
       } else if (cmd === 'clear') {

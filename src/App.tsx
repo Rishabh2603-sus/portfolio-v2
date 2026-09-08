@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Lenis from "@studio-freight/lenis";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Terminal, Mail, ArrowUpRight, ArrowRight, Download, Menu, X } from "lucide-react";
+import { Terminal, Mail, ArrowUpRight, ArrowRight, Download, Menu, X, Volume2, VolumeX } from "lucide-react";
 import { TerminalMode } from "./components/ui/TerminalMode";
 import { useSoundDesign } from "./hooks/useSoundDesign";
 import { projects, experience, skillCategories } from "./data/content";
@@ -187,7 +187,7 @@ function CustomCursor() {
 }
 
 function Navbar({ onOpenTerminal }: { onOpenTerminal?: () => void }) {
-  const { playSound } = useSoundDesign();
+  const { playSound, isAmbientPlaying, toggleAmbient, isMuted, toggleMute } = useSoundDesign();
   const [isOpen, setIsOpen] = useState(false);
 
   // Lock scroll when menu is open
@@ -240,6 +240,31 @@ function Navbar({ onOpenTerminal }: { onOpenTerminal?: () => void }) {
               </a>
             ))}
           </div>
+          
+          {/* Sound / Ambient Music Toggle */}
+          <button 
+            onClick={() => { playSound('click'); toggleAmbient(); }}
+            onMouseEnter={() => playSound('hover')}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-mono transition-all ${
+              isAmbientPlaying 
+                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.15)]' 
+                : 'bg-white/5 border-white/10 text-neutral-400 hover:text-white hover:bg-white/10'
+            }`}
+            title={isAmbientPlaying ? "Turn off ambient music" : "Play ambient synth soundscape"}
+          >
+            {isAmbientPlaying ? (
+              <>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="hidden md:inline text-[11px] tracking-wider uppercase">Soundscape ON</span>
+                <Volume2 className="w-3.5 h-3.5 text-emerald-400" />
+              </>
+            ) : (
+              <>
+                <span className="hidden md:inline text-[11px] tracking-wider uppercase">Soundscape</span>
+                <VolumeX className="w-3.5 h-3.5 opacity-60" />
+              </>
+            )}
+          </button>
           
           {/* Terminal Trigger */}
           <button 
