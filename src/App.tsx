@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import Lenis from "@studio-freight/lenis";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Mail, ArrowUpRight, ArrowRight, Download, Menu, X } from "lucide-react";
+import { Terminal, Mail, ArrowUpRight, ArrowRight, Download, Menu, X } from "lucide-react";
+import { TerminalMode } from "./components/ui/TerminalMode";
+import { useSoundDesign } from "./hooks/useSoundDesign";
 import { projects, experience, skillCategories } from "./data/content";
 import { cn } from "./utils";
 
@@ -74,6 +76,7 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
 }
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isTerminalMode, setIsTerminalMode] = useState(false);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -114,7 +117,8 @@ function App() {
       ></div>
 
       <CustomCursor />
-      <Navbar />
+      <Navbar onOpenTerminal={() => setIsTerminalMode(true)} />
+      <AnimatePresence>{isTerminalMode && <TerminalMode onClose={() => setIsTerminalMode(false)} />}</AnimatePresence>
       <main className="relative z-10">
         <div className="px-6 md:px-12 lg:px-24 mx-auto max-w-7xl">
           <HeroSection />
@@ -182,7 +186,8 @@ function CustomCursor() {
   );
 }
 
-function Navbar() {
+function Navbar({ onOpenTerminal }: { onOpenTerminal?: () => void }) {
+  const { playSound } = useSoundDesign();
   const [isOpen, setIsOpen] = useState(false);
 
   // Lock scroll when menu is open
@@ -228,15 +233,28 @@ function Navbar() {
                 key={link.name}
                 href={link.href}
                 className="text-neutral-400 hover:text-white transition-colors"
+                onMouseEnter={() => playSound('hover')}
+                onClick={() => playSound('click')}
               >
                 {link.name}
               </a>
             ))}
           </div>
           
+          {/* Terminal Trigger */}
+          <button 
+            onClick={() => { playSound('click'); onOpenTerminal?.(); }}
+            onMouseEnter={() => playSound('hover')}
+            className="hidden sm:flex items-center justify-center w-9 h-9 rounded-full bg-white/5 border border-white/10 text-neutral-400 hover:text-white hover:bg-white/10 transition-all"
+            title="Open Terminal"
+          >
+            <Terminal className="w-4 h-4" />
+          </button>
           <a
             href="/resume.docx"
             download="Rishabh_Sharma_Resume.docx"
+            onMouseEnter={() => playSound('hover')}
+            onClick={() => playSound('click')}
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black hover:bg-neutral-200 transition-all hover:scale-105 active:scale-95 duration-200"
           >
             <span className="text-xs font-bold tracking-wide uppercase">Resume</span>
