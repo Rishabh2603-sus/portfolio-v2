@@ -13,35 +13,19 @@ A premium, highly-crafted software engineering portfolio focusing on subtle inte
 - **Hardware-Accelerated Physics:** Fluid 60fps scrolling using `@studio-freight/lenis`.
 - **Interactive Magnetic Cursor:** Custom cursor with `mix-blend-difference` that tracks, expands, and snaps to interactable elements.
 - **Zero-Dependency Soundscape:** Custom Web Audio API implementation (`useSoundDesign.ts`) that generates ambient synthesized drones (55Hz warm A1 note) and tactile UI clicks—all without a single `.mp3` download.
-- **Terminal Easter Egg:** A hidden functional pseudo-terminal (click the Terminal icon in the nav, or press `Cmd+K` / `Esc` to toggle). Type `help` for commands!
+- **Terminal Easter Egg:** A hidden functional pseudo-terminal (click the Terminal icon in the nav). Type `help` for commands!
 - **Infinite Ecosystem Marquee:** A buttery-smooth, auto-scrolling tech stack banner.
 - **Mobile Optimized:** Edge-to-edge responsiveness, a full-screen blurred navigation drawer, and dynamic touch detection.
 
-## 🚀 Getting Started
+## 🛠️ Tech Stack
 
-### Prerequisites
-- Node.js 18+
-- npm or pnpm
-
-### Installation
-
-1. Clone the repository:
-   \`\`\`bash
-   git clone https://github.com/Rishabh2603-sus/portfolio-v2.git
-   \`\`\`
-2. Navigate into the directory:
-   \`\`\`bash
-   cd portfolio-v2
-   \`\`\`
-3. Install dependencies:
-   \`\`\`bash
-   npm install
-   \`\`\`
-4. Start the development server:
-   \`\`\`bash
-   npm run dev
-   \`\`\`
-5. Open your browser to \`http://localhost:5173\`.
+- **Framework:** React 18 + TypeScript + Vite
+- **Styling:** Tailwind CSS v4
+- **Animations:** Framer Motion
+- **Physics/Scroll:** @studio-freight/lenis
+- **Icons:** Lucide React
+- **Audio:** Native Browser Web Audio API
+- **Deployment:** Render (Static Site hosting)
 
 ## 🏗️ Architecture & Philosophy
 
