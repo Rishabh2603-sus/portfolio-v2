@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-background: #050505;
+  --color-surface: #111111;
+  --color-primary: #ffffff;
+  --color-secondary: #a1a1aa;
+  --color-accent: #9b59b6;
+}
+
+:root {
+  --background: 0 0% 2%;
+  --foreground: 0 0% 98%;
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+html {
+  @apply antialiased;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+body {
+  @apply min-h-screen selection:bg-white/20;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Hide scrollbar for a cleaner premium look */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
