@@ -28,20 +28,19 @@ const HackerRankIcon = () => (
 
 function Preloader({ onComplete }: { onComplete: () => void }) {
   useEffect(() => {
-    // Elegant, slow reveal timing
+    // Keep it onscreen just long enough to register, then trigger the fade
     const timer = setTimeout(() => {
       onComplete();
-    }, 2400);
+    }, 2000);
     return () => clearTimeout(timer);
   }, [onComplete]);
 
   return (
     <motion.div
-      exit={{ y: "-100vh" }}
-      transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#050505] text-[#fafafa]"
+      exit={{ opacity: 0, filter: "blur(10px)" }}
+      transition={{ duration: 1.8, ease: "easeInOut" }}
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#050505] text-[#fafafa] pointer-events-none"
     >
-      {/* Noise layer inside loader to perfectly match the site's ambience */}
       <div
         className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.04] mix-blend-overlay"
         style={{
@@ -50,21 +49,25 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
         }}
       />
       
-      <div className="relative z-10 overflow-hidden flex items-center gap-6">
+      <div className="relative z-10 flex items-center gap-6">
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.8, opacity: 0 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
           className="w-2 h-2 rounded-full bg-white hidden sm:block"
         />
-        <motion.span
-          initial={{ y: "100%", opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-          className="text-2xl md:text-3xl font-light tracking-[0.2em] text-neutral-200 uppercase"
-        >
-          Rishabh Sharma
-        </motion.span>
+        <motion.div className="overflow-hidden">
+          <motion.span
+            initial={{ y: "100%", opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: "-20%", opacity: 0 }}
+            transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+            className="text-2xl md:text-3xl font-light tracking-[0.2em] text-neutral-200 uppercase block"
+          >
+            Rishabh Sharma
+          </motion.span>
+        </motion.div>
       </div>
     </motion.div>
   );
