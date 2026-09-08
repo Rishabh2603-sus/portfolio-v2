@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { X } from 'lucide-react';
 import { useSoundDesign } from '../../hooks/useSoundDesign';
 
 export function TerminalMode({ onClose }: { onClose: () => void }) {
   const [history, setHistory] = useState<{cmd: string, out: React.ReactNode}[]>([
-    { cmd: 'boot_sequence', out: 'Rishabh OS v1.0 initialized. Type "help" to view commands.' }
+    { cmd: 'boot_sequence', out: 'Rishabh OS v1.0 initialized. Type "help" to view commands or "exit" to close.' }
   ]);
   const [input, setInput] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -17,8 +18,19 @@ export function TerminalMode({ onClose }: { onClose: () => void }) {
     
     // Lock scroll on body
     document.body.style.overflow = "hidden";
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+
     return () => {
       document.body.style.overflow = "unset";
+      
+      document.removeEventListener('keydown', handleKeyDown);
+
     };
   }, []);
 
@@ -73,6 +85,18 @@ export function TerminalMode({ onClose }: { onClose: () => void }) {
       className="fixed inset-0 z-[200] bg-[#050505] text-emerald-500 font-mono p-6 md:p-12 overflow-y-auto"
       onClick={() => inputRef.current?.focus()}
     >
+      <button 
+        onClick={(e) => {
+          e.stopPropagation();
+          playSound('click');
+          onClose();
+        }}
+        onMouseEnter={() => playSound('hover')}
+        className="fixed top-6 right-6 md:top-8 md:right-8 z-50 p-2 text-neutral-500 hover:text-white hover:bg-white/10 rounded-full transition-all"
+        title="Close Terminal (Esc)"
+      >
+        <X className="w-6 h-6" />
+      </button>
       <div
         className="pointer-events-none fixed inset-0 z-0 h-full w-full opacity-[0.06] mix-blend-overlay"
         style={{
