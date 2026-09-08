@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Lenis from "@studio-freight/lenis";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Mail, ArrowUpRight, ArrowRight, Download } from "lucide-react";
 import { projects, experience, skillCategories } from "./data/content";
 import { cn } from "./utils";
@@ -25,7 +25,80 @@ const HackerRankIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 3v18"/><path d="M18 3v18"/><path d="M6 12h12"/></svg>
 );
 
+
+function Preloader({ onComplete }: { onComplete: () => void }) {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const duration = 1800; // 1.8 seconds total
+    const interval = 20;
+    const steps = duration / interval;
+    let currentStep = 0;
+
+    const timer = setInterval(() => {
+      currentStep++;
+      const newProgress = Math.min(Math.round((currentStep / steps) * 100), 100);
+      setProgress(newProgress);
+
+      if (currentStep >= steps) {
+        clearInterval(timer);
+        setTimeout(() => {
+          onComplete();
+        }, 400); // short pause at 100% before firing complete
+      }
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [onComplete]);
+
+  return (
+    <motion.div
+      initial={{ y: 0 }}
+      exit={{ y: "-100vh" }}
+      transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#050505] text-[#fafafa]"
+    >
+      {/* Noise layer inside loader to maintain ambience */}
+      <div
+        className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.04] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")',
+        }}
+      />
+      
+      <div className="flex flex-col items-center gap-6 relative z-10 overflow-hidden">
+        <motion.div
+          initial={{ y: 40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center"
+        >
+          <span className="text-sm font-mono tracking-[0.3em] uppercase text-neutral-500 block mb-2">
+            System Initialization
+          </span>
+          <span className="text-4xl md:text-5xl font-medium tracking-tight">
+            {progress === 100 ? "Welcome." : `${progress}%`}
+          </span>
+        </motion.div>
+        
+        {/* Loading Bar */}
+        <div className="w-48 h-[1px] bg-white/[0.1] overflow-hidden relative">
+          <motion.div 
+            className="absolute top-0 left-0 bottom-0 bg-white"
+            initial={{ width: "0%" }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.1, ease: "linear" }}
+          />
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -51,6 +124,9 @@ function App() {
 
   return (
     <div className="bg-[#050505] text-[#fafafa] min-h-screen selection:bg-white/20 font-sans font-light relative overflow-hidden">
+      <AnimatePresence mode="wait">
+        {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+      </AnimatePresence>
       {/* Premium Texture: Subtle Top Glow & Grain */}
       <div className="pointer-events-none fixed top-[-20%] left-[-10%] w-[120%] h-[60%] bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.05)_0%,rgba(0,0,0,0)_60%)] z-0"></div>
       <div
