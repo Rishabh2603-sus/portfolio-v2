@@ -83,7 +83,7 @@ function Navbar() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 py-6 md:px-12 lg:px-24 backdrop-blur-md bg-[#050505]/40 border-b border-white/[0.04]"
+      className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 py-4 md:py-6 md:px-12 lg:px-24 backdrop-blur-md bg-[#050505]/40 border-b border-white/[0.04]"
     >
       <div className="flex items-center gap-3">
         <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20 shadow-sm shrink-0">
@@ -314,8 +314,8 @@ function SkillsSection() {
 
       {/* Infinite Tech Stack Marquee */}
       <div className="relative w-full py-10 flex items-center overflow-hidden border-y border-white/[0.04] bg-white/[0.01] mb-24">
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none" />
 
         <div className="flex whitespace-nowrap animate-scroll items-center gap-8 pl-8">
           {marqueeItems.map((skill, idx) => (
