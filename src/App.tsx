@@ -3,6 +3,7 @@ import Lenis from "@studio-freight/lenis";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Terminal, Mail, ArrowUpRight, ArrowRight, Download, Menu, X, Volume2, VolumeX } from "lucide-react";
 import { TerminalMode } from "./components/ui/TerminalMode";
+import { useGlowCard } from "./hooks/useGlowCard";
 import { useSoundDesign } from "./hooks/useSoundDesign";
 import { projects, experience, skillCategories } from "./data/content";
 import { cn } from "./utils";
@@ -376,6 +377,20 @@ function HeroSection() {
   );
 }
 
+function GlowCard({ children, className }: { children: React.ReactNode; className?: string }) {
+  const { cardRef, handleMouseMove, handleMouseLeave } = useGlowCard();
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`glow-card ${className ?? ''}`}
+    >
+      {children}
+    </div>
+  );
+}
+
 function ProjectsSection() {
   return (
     <section id="projects" className="py-32 border-t border-white/[0.06]">
@@ -394,16 +409,14 @@ function ProjectsSection() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {projects.map((project: any, i: number) => (
+          <GlowCard className={cn("rounded-lg", i % 2 === 1 ? "md:mt-24" : "")}>
           <motion.div
             key={project.id}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: (i % 2) * 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className={cn(
-              "group relative flex flex-col justify-between p-8 md:p-12 border border-white/[0.04] bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-500 rounded-lg",
-              i % 2 === 1 ? "md:mt-24" : ""
-            )}
+            className="group relative z-[2] flex flex-col justify-between p-8 md:p-12 border border-white/[0.04] bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-500 rounded-lg"
           >
             <div className="mb-24">
               <div className="flex justify-between items-start mb-8">
@@ -441,6 +454,7 @@ function ProjectsSection() {
               )}
             </div>
           </motion.div>
+          </GlowCard>
         ))}
       </div>
     </section>
