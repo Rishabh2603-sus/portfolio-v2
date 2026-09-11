@@ -3,6 +3,7 @@ import Lenis from "@studio-freight/lenis";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Terminal, Mail, ArrowUpRight, ArrowRight, Download, Menu, X, Volume2, VolumeX } from "lucide-react";
 import { TerminalMode } from "./components/ui/TerminalMode";
+import { AsciiBackground } from "./components/ui/AsciiBackground";
 import { useGlowCard } from "./hooks/useGlowCard";
 import { useSoundDesign } from "./hooks/useSoundDesign";
 import { projects, experience, skillCategories } from "./data/content";
@@ -117,6 +118,7 @@ function App() {
         }}
       ></div>
 
+      <AsciiBackground />
       <CustomCursor />
       <Navbar onOpenTerminal={() => setIsTerminalMode(true)} />
       <AnimatePresence>{isTerminalMode && <TerminalMode onClose={() => setIsTerminalMode(false)} />}</AnimatePresence>
