@@ -3,7 +3,6 @@ import Lenis from "@studio-freight/lenis";
 import { AnimatePresence } from "framer-motion";
 import { Preloader } from "./components/ui/Preloader";
 import { CustomCursor } from "./components/ui/CustomCursor";
-import { TopographyBackground } from "./components/ui/TopographyBackground";
 import { TerminalMode } from "./components/ui/TerminalMode";
 import { Navbar } from "./components/layout/Navbar";
 import { Footer } from "./components/layout/Footer";
@@ -55,8 +54,7 @@ export function App() {
         }}
       />
 
-      {/* Generative Topography & Cursor */}
-      <TopographyBackground />
+      {/* Cursor */}
       <CustomCursor />
 
       {/* Navigation */}
