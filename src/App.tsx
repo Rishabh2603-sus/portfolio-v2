@@ -54,7 +54,7 @@ export function App() {
         }}
       />
 
-      {/* Cursor */}
+      {/* Custom Cursor */}
       <CustomCursor />
 
       {/* Navigation */}
